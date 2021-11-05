@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Reddit Posts"
 include ':app'
+include ':core'
