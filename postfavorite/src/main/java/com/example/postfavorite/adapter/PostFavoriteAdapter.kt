@@ -12,10 +12,10 @@ import com.example.core.network.responses.Post
 import com.example.postfavorite.R
 
 class PostFavoriteAdapter(private val posts: MutableList<Post>,
-                          val onClearClick: (Post) -> Unit
+                          val onClearClick: (Post, Int) -> Unit
 ) : RecyclerView.Adapter<PostFavoriteAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View, posts: List<Post>, onClearClick: (Post) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, posts: List<Post>, onClearClick: (Post, Int) -> Unit) : RecyclerView.ViewHolder(view) {
         val thumbnailImage: AppCompatImageView = view.findViewById(R.id.post_item_thumbnail)
         val clearIcon: AppCompatImageView = view.findViewById(R.id.post_item_clear)
         val playIcon: AppCompatImageView = view.findViewById(R.id.post_item_play)
@@ -23,7 +23,7 @@ class PostFavoriteAdapter(private val posts: MutableList<Post>,
 
         init {
             clearIcon.setOnClickListener {
-                onClearClick(posts[absoluteAdapterPosition])
+                onClearClick(posts[absoluteAdapterPosition], absoluteAdapterPosition)
             }
         }
     }
@@ -48,5 +48,15 @@ class PostFavoriteAdapter(private val posts: MutableList<Post>,
     fun addPosts(newPosts: List<Post>) {
         posts.addAll(newPosts)
         notifyDataSetChanged()
+    }
+
+    fun clearPosts() {
+        posts.clear()
+        notifyDataSetChanged()
+    }
+
+    fun deletePost(position: Int) {
+        posts.removeAt(position)
+        notifyItemRemoved(position)
     }
 }

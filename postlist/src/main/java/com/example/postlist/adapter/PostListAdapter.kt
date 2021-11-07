@@ -12,10 +12,10 @@ import com.example.core.network.responses.Post
 import com.example.postlist.R
 
 class PostListAdapter(private val posts: MutableList<Post>,
-                      private val onFavoriteClick: (Post) -> Unit
+                      private val onFavoriteClick: (Post, Int) -> Unit
 ) : RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View, posts: List<Post>, onFavoriteClick: (Post) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, posts: List<Post>, onFavoriteClick: (Post, Int) -> Unit) : RecyclerView.ViewHolder(view) {
         val thumbnailImage: AppCompatImageView = view.findViewById(R.id.post_item_thumbnail)
         val favoriteIcon: AppCompatImageView = view.findViewById(R.id.post_item_favorite)
         val playIcon: AppCompatImageView = view.findViewById(R.id.post_item_play)
@@ -24,7 +24,7 @@ class PostListAdapter(private val posts: MutableList<Post>,
 
         init {
             favoriteIcon.setOnClickListener {
-                onFavoriteClick(posts[absoluteAdapterPosition])
+                onFavoriteClick(posts[absoluteAdapterPosition], absoluteAdapterPosition)
             }
         }
     }
@@ -57,6 +57,11 @@ class PostListAdapter(private val posts: MutableList<Post>,
 
     fun clearPosts() {
         posts.clear()
+        notifyDataSetChanged()
+    }
+
+    fun setFavorite(position: Int) {
+        posts[position] = posts[position].copy(isFavorite = !posts[position].isFavorite)
         notifyDataSetChanged()
     }
 }

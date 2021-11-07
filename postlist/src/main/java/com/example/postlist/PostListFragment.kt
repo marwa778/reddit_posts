@@ -94,8 +94,8 @@ class PostListFragment : Fragment() {
         })
     }
 
-    fun onFavoriteClicked(post: Post) {
+    fun onFavoriteClicked(post: Post, position: Int) {
         postListViewModel.onFavoriteClicked(post)
-        adapter.notifyDataSetChanged()
+        adapter.setFavorite(position)
     }
 }
