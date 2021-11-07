@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         /* obtain the feature module & class name from arguments */
         if (this.intent != null) {
             moduleName = "postlist"
-            className = "com.example.postlist.MainActivity"
+            className = "com.example.hometest.MainActivity"
             if (moduleName != null && className != null) {
                 startFeatureActivity(moduleName, className)
             } else {

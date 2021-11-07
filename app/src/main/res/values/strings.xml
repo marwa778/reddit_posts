@@ -4,4 +4,7 @@
     <string name="title_postlist">Post List</string>
     <string name="title_postfavorite">Post Favorite</string>
     <string name="clear_list">Clear List</string>
+    <string name="title_home">Home</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_hometest">Home Test</string>
 </resources>
