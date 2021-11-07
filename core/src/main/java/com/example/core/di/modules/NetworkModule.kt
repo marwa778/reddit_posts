@@ -9,10 +9,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
+    @Singleton
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -20,6 +22,7 @@ class NetworkModule {
         return httpLoggingInterceptor
     }
 
+    @Singleton
     @Provides
     fun provideHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
         val clientBuilder = OkHttpClient.Builder()
@@ -29,6 +32,7 @@ class NetworkModule {
         return clientBuilder.build()
     }
 
+    @Singleton
     @Provides
     fun provideRetrofitBuilder(okHttpClient: OkHttpClient) =
         Retrofit.Builder()
@@ -38,6 +42,7 @@ class NetworkModule {
             .client(okHttpClient)
             .build()
 
+    @Singleton
     @Provides
     fun providePostService(retrofit: Retrofit) = retrofit.create(PostService::class.java)
 }
