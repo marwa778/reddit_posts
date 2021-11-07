@@ -54,4 +54,9 @@ class PostListAdapter(private val posts: MutableList<Post>,
         posts.addAll(newPosts)
         notifyDataSetChanged()
     }
+
+    fun clearPosts() {
+        posts.clear()
+        notifyDataSetChanged()
+    }
 }

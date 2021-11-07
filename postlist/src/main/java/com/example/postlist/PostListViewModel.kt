@@ -30,7 +30,8 @@ class PostListViewModel @Inject constructor(
     }
 
     private val compositeDisposable = CompositeDisposable()
-    var afterSearchQuery = ""
+    private var afterSearchQuery = ""
+    var query = ""
 
     fun getPosts(): LiveData<List<Post>> {
         return posts
@@ -42,7 +43,8 @@ class PostListViewModel @Inject constructor(
         )
     }
 
-    fun searchPosts(searchQuery:String, after:String = afterSearchQuery) {
+    fun searchPosts(searchQuery:String = query, after:String = afterSearchQuery) {
+        query = searchQuery
         compositeDisposable.add(
             getPostList(postRepository.getPostsSearchResult(searchQuery = searchQuery, after = after))
         )

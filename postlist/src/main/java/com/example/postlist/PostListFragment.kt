@@ -12,6 +12,8 @@ import com.example.postlist.di.DaggerPostListComponent
 import com.example.redditposts.RedditPostApplication.Companion.coreComponent
 import javax.inject.Inject
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import java.lang.Exception
 
 class PostListFragment : Fragment() {
 
@@ -20,6 +22,7 @@ class PostListFragment : Fragment() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: PostListAdapter
+    lateinit var searchView: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +43,7 @@ class PostListFragment : Fragment() {
         postListComponent.inject(this)
 
         addScrollStateChangeListener()
+        addSearchViewListener()
 
         postListViewModel.getPosts().observe(viewLifecycleOwner, { posts ->
             adapter.addPosts(posts)
@@ -48,6 +52,7 @@ class PostListFragment : Fragment() {
 
     fun initializeViews(view: View) {
         recyclerView = view.findViewById(R.id.post_list)
+        searchView = view.findViewById(R.id.post_list_search)
         adapter = PostListAdapter(mutableListOf(), ::onFavoriteClicked)
         recyclerView.adapter = adapter
     }
@@ -57,8 +62,34 @@ class PostListFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    postListViewModel.loadPosts()
+                    if(postListViewModel.query.isNotBlank()) {
+                        postListViewModel.searchPosts()
+                    } else {
+                        postListViewModel.loadPosts()
+                    }
                 }
+            }
+        })
+    }
+
+    fun addSearchViewListener() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                try {
+                    adapter.clearPosts()
+                    postListViewModel.searchPosts(searchQuery = query, after = "")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                if(newText.isBlank()) {
+                    adapter.clearPosts()
+                    postListViewModel.loadPosts(after = "")
+                }
+                return false
             }
         })
     }
