@@ -12,5 +12,6 @@ data class Post (
     @SerializedName("author") @Expose val author:String = "",
     @SerializedName("is_video") @Expose val isVideo: Boolean = false,
     @SerializedName("thumbnail") @Expose val thumbnail:String = "",
-    @SerializedName("url") @Expose val url:String = ""
+    @SerializedName("id") @Expose val id:String = "",
+    val isFavorite:Boolean = false,
 )
