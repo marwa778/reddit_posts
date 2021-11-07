@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.core.di.scopes.FeatureScope
 import com.example.core.network.repositories.PostRepository
 import com.example.core.network.responses.Post
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,7 +13,7 @@ import javax.inject.Inject
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Singleton
 
-@Singleton
+@FeatureScope
 class PostListViewModel @Inject constructor(
     private val postRepository: PostRepository
     ) : ViewModel() {

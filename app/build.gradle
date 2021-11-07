@@ -59,7 +59,7 @@ dependencies {
     api "androidx.activity:activity-ktx:1.4.0"
 
     def dagger_version = "2.40"
-    api "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
 

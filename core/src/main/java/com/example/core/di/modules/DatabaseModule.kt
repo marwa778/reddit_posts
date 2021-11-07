@@ -13,7 +13,7 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideMarvelDatabase(context: Context) =
+    fun providePostDatabase(context: Context) =
         Room.databaseBuilder(
             context,
             AppDatabase::class.java,
@@ -22,6 +22,6 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideCharacterFavoriteDao(appDatabase: AppDatabase) =
+    fun providePostFavoriteDao(appDatabase: AppDatabase) =
         appDatabase.postFavoriteDao()
 }

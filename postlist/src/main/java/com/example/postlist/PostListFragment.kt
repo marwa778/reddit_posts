@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.postlist.adapter.PostListAdapter
 import com.example.postlist.di.DaggerPostListComponent
+import com.example.redditposts.RedditPostApplication.Companion.coreComponent
 import javax.inject.Inject
 
 class PostListFragment : Fragment() {
@@ -30,7 +31,10 @@ class PostListFragment : Fragment() {
 
         initializeViews(view)
 
-        val postListComponent = DaggerPostListComponent.create()
+        val postListComponent = DaggerPostListComponent
+            .builder()
+            .coreComponent(coreComponent(requireContext()))
+            .build()
         postListComponent.inject(this)
 
         postListViewModel.getPosts().observe(viewLifecycleOwner, { posts ->

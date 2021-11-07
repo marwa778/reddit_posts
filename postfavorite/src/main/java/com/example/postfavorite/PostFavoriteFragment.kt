@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.postfavorite.adapter.PostFavoriteAdapter
+import com.example.postfavorite.di.DaggerPostFavoriteComponent
+import com.example.redditposts.RedditPostApplication.Companion.coreComponent
 import javax.inject.Inject
 
 class PostFavoriteFragment : Fragment() {
@@ -29,9 +31,11 @@ class PostFavoriteFragment : Fragment() {
 
         initializeViews(view)
 
-
-        //val postListComponent = Dagg.create()
-        //postListComponent.inject(this)
+        val postFavoriteComponent = DaggerPostFavoriteComponent
+            .builder()
+            .coreComponent(coreComponent(requireContext()))
+            .build()
+        postFavoriteComponent.inject(this)
 
         postFavoriteViewModel.getPosts().observe(viewLifecycleOwner, { posts ->
             adapter.addPosts(posts)

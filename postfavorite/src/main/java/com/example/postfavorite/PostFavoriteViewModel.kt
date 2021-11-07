@@ -5,12 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.database.repositories.LocalPostRepository
+import com.example.core.di.scopes.FeatureScope
 import com.example.core.network.responses.Post
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+@FeatureScope
 class PostFavoriteViewModel  @Inject constructor(
     private val localPostRepository: LocalPostRepository
 ) : ViewModel() {
