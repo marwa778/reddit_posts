@@ -50,6 +50,22 @@ class PostFavoriteViewModel  @Inject constructor(
         )
     }
 
+    fun deletePost(post: Post) {
+        Completable.fromRunnable {
+            localPostRepository.deletePost(post)
+        }
+        .subscribeOn(Schedulers.io())
+        .subscribe()
+    }
+
+    fun deleteAllPosts() {
+        Completable.fromRunnable {
+            localPostRepository.deleteAllPosts()
+        }
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
     override fun onCleared() {
         compositeDisposable.clear()
     }

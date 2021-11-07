@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.network.responses.Post
 import com.example.postfavorite.adapter.PostFavoriteAdapter
 import com.example.postfavorite.di.DaggerPostFavoriteComponent
 import com.example.redditposts.RedditPostApplication.Companion.coreComponent
@@ -18,6 +20,7 @@ class PostFavoriteFragment : Fragment() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: PostFavoriteAdapter
+    lateinit var clearListBtn: AppCompatButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,14 +45,20 @@ class PostFavoriteFragment : Fragment() {
         })
     }
 
-    fun initializeViews(view: View) {
+    private fun initializeViews(view: View) {
         recyclerView = view.findViewById(R.id.post_favorite_list)
         adapter = PostFavoriteAdapter(mutableListOf(), ::onClearClicked)
         recyclerView.adapter = adapter
+
+        clearListBtn = view.findViewById(R.id.post_favorite_clear_list)
+        clearListBtn.setOnClickListener {
+            postFavoriteViewModel.deleteAllPosts()
+            adapter.notifyDataSetChanged()
+        }
     }
 
-    fun onClearClicked(position: Int) {
-
+    fun onClearClicked(post: Post) {
+        postFavoriteViewModel.deletePost(post)
+        adapter.notifyDataSetChanged()
     }
-
 }

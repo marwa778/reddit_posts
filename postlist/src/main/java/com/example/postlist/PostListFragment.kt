@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.network.responses.Post
 import com.example.postlist.adapter.PostListAdapter
 import com.example.postlist.di.DaggerPostListComponent
 import com.example.redditposts.RedditPostApplication.Companion.coreComponent
@@ -48,7 +49,7 @@ class PostListFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-    fun onFavoriteClicked(position: Int) {
+    fun onFavoriteClicked(post: Post) {
 
     }
 }

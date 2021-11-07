@@ -12,7 +12,7 @@ import com.example.core.network.responses.Post
 import com.example.postlist.R
 
 class PostListAdapter(private val posts: MutableList<Post>,
-                      private val onFavoriteClick: (Int) -> Unit
+                      private val onFavoriteClick: (Post) -> Unit
 ) : RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
