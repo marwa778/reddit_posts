@@ -10,3 +10,4 @@ rootProject.name = "Reddit Posts"
 include ':app'
 include ':core'
 include ':postlist'
+include ':postfavorite'
