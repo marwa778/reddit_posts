@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/post_list_search"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
