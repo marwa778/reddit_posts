@@ -43,6 +43,10 @@ class PostFavoriteFragment : Fragment() {
         postFavoriteViewModel.getPosts().observe(viewLifecycleOwner, { posts ->
             adapter.addPosts(posts)
         })
+
+        postFavoriteViewModel.notifyChange.observe(viewLifecycleOwner, { _ ->
+            adapter.notifyDataSetChanged()
+        })
     }
 
     private fun initializeViews(view: View) {
@@ -53,12 +57,10 @@ class PostFavoriteFragment : Fragment() {
         clearListBtn = view.findViewById(R.id.post_favorite_clear_list)
         clearListBtn.setOnClickListener {
             postFavoriteViewModel.deleteAllPosts()
-            adapter.notifyDataSetChanged()
         }
     }
 
     fun onClearClicked(post: Post) {
         postFavoriteViewModel.deletePost(post)
-        adapter.notifyDataSetChanged()
     }
 }

@@ -11,6 +11,7 @@ import com.example.postlist.adapter.PostListAdapter
 import com.example.postlist.di.DaggerPostListComponent
 import com.example.redditposts.RedditPostApplication.Companion.coreComponent
 import javax.inject.Inject
+import android.widget.Toast
 
 class PostListFragment : Fragment() {
 
@@ -38,6 +39,8 @@ class PostListFragment : Fragment() {
             .build()
         postListComponent.inject(this)
 
+        addScrollStateChangeListener()
+
         postListViewModel.getPosts().observe(viewLifecycleOwner, { posts ->
             adapter.addPosts(posts)
         })
@@ -49,7 +52,19 @@ class PostListFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-    fun onFavoriteClicked(post: Post) {
+    fun addScrollStateChangeListener() {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    postListViewModel.loadPosts()
+                }
+            }
+        })
+    }
 
+    fun onFavoriteClicked(post: Post) {
+        postListViewModel.onFavoriteClicked(post)
+        adapter.notifyDataSetChanged()
     }
 }

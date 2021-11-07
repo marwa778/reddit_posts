@@ -15,7 +15,7 @@ class PostListAdapter(private val posts: MutableList<Post>,
                       private val onFavoriteClick: (Post) -> Unit
 ) : RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, posts: List<Post>, onFavoriteClick: (Post) -> Unit) : RecyclerView.ViewHolder(view) {
         val thumbnailImage: AppCompatImageView = view.findViewById(R.id.post_item_thumbnail)
         val favoriteIcon: AppCompatImageView = view.findViewById(R.id.post_item_favorite)
         val playIcon: AppCompatImageView = view.findViewById(R.id.post_item_play)
@@ -24,7 +24,7 @@ class PostListAdapter(private val posts: MutableList<Post>,
 
         init {
             favoriteIcon.setOnClickListener {
-                //onFavoriteClick()
+                onFavoriteClick(posts[absoluteAdapterPosition])
             }
         }
     }
@@ -32,15 +32,17 @@ class PostListAdapter(private val posts: MutableList<Post>,
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.post_item, viewGroup, false)
-
-        return ViewHolder(view)
+        return ViewHolder(view, posts, onFavoriteClick)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         Glide.with(viewHolder.thumbnailImage.context)
             .load(posts[position].thumbnail)
-            .into(viewHolder.thumbnailImage);
-        //viewHolder.favoriteIcon.text = posts[position]
+            .into(viewHolder.thumbnailImage)
+        if(posts[position].isFavorite)
+            viewHolder.favoriteIcon.setImageResource(R.drawable.ic_favorite)
+        else
+            viewHolder.favoriteIcon.setImageResource(R.drawable.ic_favorite_empty)
         viewHolder.playIcon.isVisible = posts[position].isVideo
         viewHolder.titleTextView.text = posts[position].title
         viewHolder.authorTextView.text = posts[position].author

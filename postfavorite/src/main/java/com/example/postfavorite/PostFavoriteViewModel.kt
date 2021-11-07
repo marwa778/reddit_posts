@@ -25,6 +25,8 @@ class PostFavoriteViewModel  @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
+    var notifyChange: MutableLiveData<Boolean> = MutableLiveData()
+
     fun getPosts(): LiveData<List<Post>> {
         return posts
     }
@@ -55,7 +57,15 @@ class PostFavoriteViewModel  @Inject constructor(
             localPostRepository.deletePost(post)
         }
         .subscribeOn(Schedulers.io())
-        .subscribe()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+            {
+                notifyChange.value = true
+            },
+            { throwable ->
+                Log.e("PostFavoriteFragment", throwable.message ?: "onError")
+            }
+        )
     }
 
     fun deleteAllPosts() {
@@ -63,7 +73,15 @@ class PostFavoriteViewModel  @Inject constructor(
             localPostRepository.deleteAllPosts()
         }
             .subscribeOn(Schedulers.io())
-            .subscribe()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    notifyChange.value = true
+                },
+                { throwable ->
+                    Log.e("PostFavoriteFragment", throwable.message ?: "onError")
+                }
+            )
     }
 
     override fun onCleared() {

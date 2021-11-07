@@ -11,11 +11,14 @@ interface PostFavoriteDao {
     @Query("SELECT * FROM PostFavorite")
     fun getAll(): Observable<List<PostFavorite>>
 
+    @Query("SELECT * FROM PostFavorite WHERE id = :postFavoriteId")
+    fun getPostById(postFavoriteId: String): PostFavorite?
+
     @Insert
     fun insertPost(post: PostFavorite)
 
     @Delete
-    fun delete(post: PostFavorite)
+    fun deletePost(post: PostFavorite)
 
     @Query("DELETE FROM PostFavorite")
     fun deleteAll()

@@ -23,16 +23,9 @@ class PostFavoriteAdapter(private val posts: MutableList<Post>,
 
         init {
             clearIcon.setOnClickListener {
-                onClearClick(posts[bindingAdapterPosition])
+                onClearClick(posts[absoluteAdapterPosition])
             }
         }
-    }
-
-    fun test(view: View, post: Post) {
-        view.setOnClickListener {
-            onClearClick(post)
-        }
-
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {

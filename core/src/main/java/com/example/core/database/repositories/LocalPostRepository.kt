@@ -11,12 +11,14 @@ class LocalPostRepository @Inject constructor(
 
     fun getAllPosts() : Observable<List<PostFavorite>> = postFavoriteDao.getAll()
 
+    fun getPostById(id: String) : PostFavorite? = postFavoriteDao.getPostById(id)
+
     fun insertPost(post: Post) {
         postFavoriteDao.insertPost(mapPostToFavorite(post))
     }
 
     fun deletePost(post: Post) {
-        postFavoriteDao.delete(mapPostToFavorite(post))
+        postFavoriteDao.deletePost(mapPostToFavorite(post))
     }
 
     fun deleteAllPosts() {
